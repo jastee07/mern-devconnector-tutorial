@@ -153,7 +153,6 @@ router.post(
     }).then(profile => {
       if (profile) {
         //update
-        console.log("Updating Profile");
         Profile.findOneAndUpdate(
           {
             user: req.user.id
@@ -167,7 +166,6 @@ router.post(
         ).then(profile => res.json(profile));
       } else {
         // Create
-        console.log("Creating profile");
         // Check if handle Exists
         Profile.findOne({
           handle: profileFields.handle
