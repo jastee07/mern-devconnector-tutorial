@@ -20,6 +20,11 @@ import EditProfile from "./components/edit-profile/EditProfile";
 
 import "./App.css";
 import { clearCurrentProfile } from "./actions/profileActions";
+import AddExperience from "./components/add-credentials/AddExperience";
+import AddEducation from "./components/add-credentials/AddEducation";
+import Profiles from "./components/profiles/Profiles";
+
+import Profile from "./components/profile/Profile";
 
 //check for token
 if (localStorage.jwtToken) {
@@ -33,11 +38,10 @@ if (localStorage.jwtToken) {
   //Check for expired token
   const currentTime = Date.now / 1000;
   if (decoded.exp < currentTime) {
-    //logout user
-    store.dispatch(logoutUser());
-
     //Clear current Profile
     store.dispatch(clearCurrentProfile());
+    //logout user
+    store.dispatch(logoutUser());
     //Redirect to login
     window.location.href = "/login";
   }
@@ -54,6 +58,8 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/profile/:handle" component={Profile} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
@@ -69,6 +75,20 @@ class App extends Component {
                   exact
                   path="/edit-profile"
                   component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-experience"
+                  component={AddExperience}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-education"
+                  component={AddEducation}
                 />
               </Switch>
             </div>
